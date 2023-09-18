@@ -16,6 +16,10 @@
         messageB: document.querySelector("#scroll-section-0 .main-message.b"),
         messageC: document.querySelector("#scroll-section-0 .main-message.c"),
         messageD: document.querySelector("#scroll-section-0 .main-message.d"),
+
+        canvas: document.querySelector("#video-canvas-0"),
+        context: document.querySelector("#video-canvas-0").getContext("2d"),
+        videoImages: [],
       },
       values: {
         messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
@@ -34,6 +38,10 @@
         messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
         messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
         messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
+
+        videoImageCount: 300,
+        imageSequence: [0, 299],
+        canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
       },
     },
     {
@@ -92,6 +100,14 @@
     },
   ];
 
+  function setCanvasImages() {
+    for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
+      const imageElem = new Image();
+      imageElem.src = `./video/001/IMG_${6726 + i}.jpg`;
+      sceneInfo[0].objs.videoImages.push(imageElem);
+    }
+  }
+
   function setLayout() {
     // 각 스크롤 섹션의 높이 세팅
     for (const scene of sceneInfo) {
@@ -114,6 +130,9 @@
       }
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
+
+    const heightRatio = window.innerHeight / 1080;
+    sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`;
   }
 
   function calcValues(values, currentYOffset) {
@@ -242,6 +261,15 @@
             currentYOffset
           )}%, 0)`;
         }
+
+        let sequence = Math.round(
+          calcValues(values.imageSequence, currentYOffset)
+        );
+        objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        objs.canvas.style.opacity = calcValues(
+          values.canvas_opacity,
+          currentYOffset
+        );
         break;
       case 2:
         if (scrollRatio <= 0.25) {
@@ -356,7 +384,11 @@
     playAnimation();
   }
 
-  window.addEventListener("load", setLayout);
+  window.addEventListener("load", () => {
+    setLayout();
+    setCanvasImages();
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+  });
   window.addEventListener("resize", setLayout);
   window.addEventListener("scroll", () => {
     yOffset = window.scrollY;

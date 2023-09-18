@@ -112,13 +112,13 @@
   function setCanvasImages() {
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       const imageElem = new Image();
-      imageElem.src = `./video/001/IMG_${6726 + i}.jpg`;
+      imageElem.src = `./video/001/IMG_${6726 + i}.JPG`;
       sceneInfo[0].objs.videoImages.push(imageElem);
     }
 
     for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
       const imageElem = new Image();
-      imageElem.src = `./video/002/IMG_${7027 + i}.jpg`;
+      imageElem.src = `./video/002/IMG_${7027 + i}.JPG`;
       sceneInfo[2].objs.videoImages.push(imageElem);
     }
   }

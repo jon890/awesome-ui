@@ -69,6 +69,37 @@
     document.body.setAttribute("id", `show-scene-${currentScene}`);
   }
 
+  function calcValues(values, currentYOffset) {
+    let rv;
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+
+    rv = values[0] + scrollRatio * (values[1] - values[0]);
+    return rv;
+  }
+
+  function playAnimation() {
+    const objs = sceneInfo[currentScene].objs;
+    const values = sceneInfo[currentScene].values;
+    const currentYOffset = yOffset - prevScrollHeight;
+
+    console.log(currentScene, currentYOffset);
+
+    switch (currentScene) {
+      case 0:
+        objs.messageA.style.opacity = calcValues(
+          values.messageA_opacity,
+          currentYOffset
+        );
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+    }
+  }
+
   function scrollLoop() {
     prevScrollHeight = 0;
     for (let i = 0; i < currentScene; i++) {
@@ -85,6 +116,8 @@
       currentScene--;
       document.body.setAttribute("id", `show-scene-${currentScene}`);
     }
+
+    playAnimation();
   }
 
   window.addEventListener("load", setLayout);

@@ -169,7 +169,7 @@
       scene.objs.container.style.height = `${scene.scrollHeight}px`;
     }
 
-    yOffset = window.screenY;
+    yOffset = window.scrollY;
 
     let totalScrollHeight = 0;
     for (let i = 0; i < sceneInfo.length; i++) {
@@ -628,8 +628,6 @@
       const currentYOffset = delayedYOffset - prevScrollHeight;
 
       if (currentScene === 0 || currentScene === 2) {
-        console.log("loop");
-
         const sequence = Math.round(
           calcValues(values.imageSequence, currentYOffset)
         );
@@ -648,8 +646,23 @@
   }
 
   window.addEventListener("load", () => {
+    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
     document.body.classList.remove("before-load");
     setLayout();
+
+    let tempYOffset = window.scrollY;
+    let tempScrollCount = 0;
+    if (yOffset > 0) {
+      const sId = setInterval(() => {
+        window.scrollTo(0, tempYOffset);
+        tempScrollCount++;
+        tempYOffset += 5;
+
+        if (tempScrollCount > 20) {
+          clearInterval(sId);
+        }
+      }, 20);
+    }
 
     window.addEventListener("resize", () => {
       if (window.innerWidth > 900) {
@@ -675,7 +688,6 @@
       .addEventListener("transitionend", (e) => {
         document.body.removeChild(e.currentTarget);
       });
-    sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
   });
   setCanvasImages();
 })();

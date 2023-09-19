@@ -463,6 +463,8 @@
 
         break;
       case 3:
+        let step = 0;
+
         // 가로/세로 모두 꽉 차게 하기 위해 여기서 세팅 (게산 필요)
         const widthRatio = window.innerWidth / objs.canvas.width;
         const heightRatio = window.innerHeight / objs.canvas.height;
@@ -516,6 +518,17 @@
           parseInt(whiteRectWidth),
           objs.canvas.height
         );
+
+        if (scrollRatio < values.rect1X[2].end) {
+          step = 1;
+          objs.canvas.classList.remove("sticky");
+        } else {
+          step = 2;
+          objs.canvas.classList.add("sticky");
+          objs.canvas.style.top = `${
+            -(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2
+          }px`;
+        }
         break;
     }
   }

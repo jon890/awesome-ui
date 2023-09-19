@@ -16,6 +16,11 @@ body.before-load {
   overflow: hidden;
 }
 
+.container {
+  /* 모바일 가로 스크롤 방지 */
+  overflow-x: hidden;
+}
+
 p {
   line-height: 1.6;
 }
@@ -50,6 +55,10 @@ a {
   position: fixed;
   top: 0;
   background: rgba(255, 255, 255, 0.1);
+
+  -webkit-backdrop-filter: saturate(180%) blur(15px);
+  -moz-backdrop-filter: saturate(180%) blur(15px);
+  -o-backdrop-filter: saturate(180%) blur(15px);
   backdrop-filter: saturate(180%) blur(15px);
 }
 
@@ -170,7 +179,7 @@ a {
 
 .canvas-caption {
   max-width: 1000px;
-  margin: -15em auto 0;
+  margin: -24rem auto 0;
   padding: 0 1rem;
   color: #888;
   font-size: 1.2rem;
@@ -319,7 +328,7 @@ a {
 
   .canvas-caption {
     padding: 0;
-    margin: -5em auto 0;
+    margin: -8rem auto 0;
     font-size: 2rem;
   }
 }

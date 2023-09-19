@@ -587,11 +587,6 @@
             values.canvasCaption_translateY[2].end =
               values.canvasCaption_opacity[2].end;
 
-            console.log(
-              values.canvasCaption_opacity,
-              values.canvasCaption_translateY
-            );
-
             objs.canvasCaption.style.opacity = calcValues(
               values.canvasCaption_opacity,
               currentYOffset

@@ -125,6 +125,14 @@
     },
   ];
 
+  function checkMenu() {
+    if (yOffset > 44) {
+      document.body.classList.add("local-nav-sticky");
+    } else {
+      document.body.classList.remove("local-nav-sticky");
+    }
+  }
+
   function setCanvasImages() {
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       const imageElem = new Image();
@@ -622,15 +630,15 @@
     if (enterNewScene) return;
     playAnimation();
   }
-
   window.addEventListener("load", () => {
     setLayout();
-    setCanvasImages();
     sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
   });
   window.addEventListener("resize", setLayout);
   window.addEventListener("scroll", () => {
     yOffset = window.scrollY;
     scrollLoop();
+    checkMenu();
   });
+  setCanvasImages();
 })();

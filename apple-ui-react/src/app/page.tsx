@@ -4,6 +4,9 @@ import { useEffect, useRef } from "react";
 import Navigation from "./components/Navigation";
 
 export default function Home() {
+  let scrollY = 0;
+  const currentScene = 0;
+
   const SceneInfo = [
     {
       type: "sticky",
@@ -53,10 +56,28 @@ export default function Home() {
         container.style.height = `${scene.scrollHeight}px`;
       }
     }
+
+    scrollY = window.scrollY;
   }
+
+  function handleScroll() {
+    scrollY = window.scrollY;
+
+    console.log(scrollY);
+
+    scrollLoop();
+  }
+
+  function scrollLoop() {}
 
   useEffect(() => {
     setLayout();
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll); // clean up
+    };
   }, []);
 
   return (

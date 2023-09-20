@@ -1,8 +1,6 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <main className="container">
+    <main>
       <nav className="h-[44px] py-[1rem] w-full">
         <div className="flex items-center max-w-[1000px] mx-auto h-full justify-between">
           <a href="#">Rooms</a>

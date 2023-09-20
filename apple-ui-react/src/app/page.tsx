@@ -1,11 +1,69 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Navigation from "./components/Navigation";
 
 export default function Home() {
+  const SceneInfo = [
+    {
+      type: "sticky",
+      heightNum: 5, // 브라우저의 몇 배수 세팅
+      scrollHeight: 0, // 스크롤 가능한 높이
+      elements: {
+        container: useRef<HTMLDivElement>(null),
+      },
+    },
+    {
+      type: "normal",
+      heightNum: 0,
+      scrollHeight: 0, // 스크롤 가능한 높이
+      elements: {
+        container: useRef<HTMLDivElement>(null),
+      },
+    },
+    {
+      type: "sticky",
+      heightNum: 5, // 브라우저의 몇 배수 세팅
+      scrollHeight: 0, // 스크롤 가능한 높이
+      elements: {
+        container: useRef<HTMLDivElement>(null),
+      },
+    },
+    {
+      type: "normal",
+      heightNum: 5, // 브라우저의 몇 배수 세팅
+      scrollHeight: 0, // 스크롤 가능한 높이
+      elements: {
+        container: useRef<HTMLDivElement>(null),
+      },
+    },
+  ];
+
+  function setLayout() {
+    for (const scene of SceneInfo) {
+      const container = scene.elements.container.current;
+
+      if (scene.type === "sticky") {
+        scene.scrollHeight = scene.heightNum * window.innerHeight;
+      } else if (scene.type === "normal") {
+        scene.scrollHeight = container?.offsetHeight ?? 0;
+      }
+
+      if (container) {
+        container.style.height = `${scene.scrollHeight}px`;
+      }
+    }
+  }
+
+  useEffect(() => {
+    setLayout();
+  }, []);
+
   return (
     <main>
       <Navigation />
 
-      <section className="pt-[50vh]">
+      <section className="pt-[50vh]" ref={SceneInfo[0].elements.container}>
         <h1 className="text-[4rem] text-center">AirMug Pro</h1>
         <div className="flex items-center justify-center text-[2.5rem]">
           <p className="font-bold text-center leading-[1.2]">
@@ -37,7 +95,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pt-[50vh]">
+      <section className="pt-[50vh]" ref={SceneInfo[1].elements.container}>
         <p>
           <strong>보통 스크롤 영역</strong>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus
@@ -54,7 +112,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="pt-[50vh]">
+      <section className="pt-[50vh]" ref={SceneInfo[2].elements.container}>
         <div className="flex items-center justify-center text-[2.5rem]">
           <p className="font-bold text-center leading-[1.2]">
             <small>편안한 촉감</small>
@@ -82,7 +140,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pt-[50vh]">
+      <section className="pt-[50vh]" ref={SceneInfo[3].elements.container}>
         <div className="flex items-center justify-center text-[2.5rem]">
           <p className="font-bold text-center leading-[1.2]">
             <strong>Retina 머그</strong>
